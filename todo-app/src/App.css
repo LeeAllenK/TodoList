@@ -38,26 +38,22 @@
 .logoutBtn:hover {
   transform: scale(1.1);
 }
-
 body {
   font-family: "Anton SC", sans-serif;
-    font-weight: 100;
-    font-size: 20px;
-    font-style: normal;
+  font-weight: 100;
+  font-size: 20px;
+  font-style: normal;
 }
 .header {
   display: flex;
   justify-content: center;
 }
-
 .checkbox {
   cursor: pointer;
 }
-
 .inputBorder {
   display: flex;
   justify-content: center;
-  /* margin: 30px; */
 }
 .inputText{
   border-radius: 30px;
@@ -83,7 +79,6 @@ body {
 }
 .addButton {
   border-radius: 10px;
-  /* border: 1px solid transparent; */
   padding: 10px 40px;
   font-size: 1em;
   font-weight: 500;
@@ -91,7 +86,6 @@ body {
   color: white;
   background-color: black;
   margin: 1px;
-  /* cursor: pointer; */
 }
 .editBtn{
   border-radius: 10px;
@@ -100,16 +94,13 @@ body {
   font-weight: inherit;
   color: white;
   background-color: black;
-  /* cursor: pointer; */
 }
-
 .ul-list{
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
-
 .todo-list {
   display: flex;
   justify-content: center;
@@ -131,7 +122,12 @@ body {
   border-bottom: thick line;
   width: 600px;
 }
-
+.todo-list:hover{
+  background-color: rgba(4, 89, 4, 0.798);
+}
+.todo-list-white:hover{
+  background-color: rgb(4, 89, 4);
+}
 .submitButton {
   font-size: 20px;
   font-weight: bolder;
@@ -139,11 +135,9 @@ body {
   outline: none;
   cursor: pointer;
 }
-
 .submitButton:hover {
   transform: scale(1.2);
 }
-
 .footer {
   display: flex;
   justify-content: center;

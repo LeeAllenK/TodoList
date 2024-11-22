@@ -2,11 +2,10 @@ import { useState, useReducer } from 'react';
 
 import TodoList from './TodoList.jsx'
 import TodoReducer from './TodoReducer.jsx'
-// import { SubmitButton } from './SubmitButton';
 import { AddButton } from './components/Buttons/AddBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
-import {faCircleArrowUp} from '@fortawesome/free-solid-svg-icons';
+
 
 
 import './App.css' 
@@ -20,7 +19,6 @@ const TodoApp = () => {
   const [darkMode , setDarkMode] = useState(false)
   const [style, setStyle] = useState("black");
 
-
   const handleAdd = () => {
     dispatch({
       type: 'add',
@@ -33,9 +31,11 @@ const TodoApp = () => {
   const handleEdit = (todo) => {
     dispatch({
       type: 'edit',
-      todo: todo
+      todo: todo,
     })
+  console.log(todo.completed)
   }
+
   const handleDelete = (todoId) => {
     dispatch({
       type: 'delete',
@@ -61,7 +61,6 @@ const TodoApp = () => {
   }
 return (
   <div className='App'>
-
     <div>
     <FontAwesomeIcon
      icon={faSun} 

@@ -7,7 +7,6 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 export const TrashButton = ({ onClick, children, style }) => {
 
 	return (
-
 		<FontAwesomeIcon
 			icon={faTrash}
 			style={style}

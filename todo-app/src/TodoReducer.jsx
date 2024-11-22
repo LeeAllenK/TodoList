@@ -1,4 +1,3 @@
-import {useReducer} from 'react';
 
 export default function TodoReducer(todos, action) {
 	switch(action.type) {
@@ -13,6 +12,7 @@ export default function TodoReducer(todos, action) {
 			]
 		}
 		case 'edit': {
+			
 			return todos.map((t) => {
 				if(t.id === action.todo.id) {
 					return action.todo

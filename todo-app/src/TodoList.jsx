@@ -9,19 +9,18 @@ export default function TodoList({items , onEdit, onDeleteClick,darkClassName, d
 
 	return(
 		<ul className={'ul-list'} >
-			{items.map((item) => (
+			{items.map((item , index) => (
 				<li
 					className={darkClassName} 
-				 key={item.id}>
-					
-					<Todos todo={item} editStyle={todoStyle} style={darkStyle} editBtnStyle={getStyle} className={getClass} onChange={onEdit} onDelete={onDeleteClick}/> 
+				 key={item.id}>	
+					<Todos todo={item} editStyle={todoStyle} style={darkStyle}editBtnStyle={getStyle} className={getClass} onChange={onEdit} onDelete={onDeleteClick}/> 
 				</li>
 			))}	
 		</ul>
 	)
 }
 
-function Todos({ todo, onChange, onDelete,style, editStyle, editBtnStyle,className}){
+function Todos({ todo, onChange,onDelete,style, editBtnStyle,className}){
 	const [isEditing , setIsEditing] = useState(false);
 	let content;
 	if(isEditing){
@@ -31,8 +30,8 @@ function Todos({ todo, onChange, onDelete,style, editStyle, editBtnStyle,classNa
 				className='inputText'
 				type='text'
 				value={todo.text}
-				onChange={(e) => {
-					onChange({
+					onChange={(e) => {
+						onChange({
 						...todo,
 						text: e.target.value	
 					})
@@ -51,8 +50,7 @@ function Todos({ todo, onChange, onDelete,style, editStyle, editBtnStyle,classNa
 			icon={faPenToSquare} 
 			value='Edit' 
 			style={{cursor: 'pointer'}}
-			onClick={() => setIsEditing(true)}
-				
+			onClick={() => setIsEditing(true)}		
 			/>
 				<TrashButton
 					style={{ cursor: 'pointer' }}
