@@ -13,6 +13,7 @@ export default function TodoReducer(todos, action) {
 		}
 		case 'edit': {
 			
+			console.log(action.id)
 			return todos.map((t) => {
 				if(t.id === action.todo.id) {
 					return action.todo

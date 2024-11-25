@@ -61,9 +61,14 @@ body {
   font-weight: 100;
   font-size: inherit;
   font-style: normal;
-  width: 400px;
+  /* width: 400px; */
   text-align: center;
 
+}
+@media (max-width: 10000px) {
+  .inputText {
+    width: 450px;
+  }
 }
 .addTodo {
   border: 1px solid rgb(3, 3, 3);
@@ -109,7 +114,7 @@ body {
   margin: 2px;
   border: 2px solid black;
   border-bottom: thick line;
-  width: 600px;
+  box-sizing: border-box;
 }
 .todo-list-white {
   display: flex;
@@ -120,7 +125,7 @@ body {
   margin: 2px;
   border: 2px solid white;
   border-bottom: thick line;
-  width: 600px;
+  
 }
 .todo-list:hover{
   background-color: rgba(4, 89, 4, 0.798);

@@ -1,27 +1,36 @@
-import {useState} from 'react'
+import {useState , useContext} from 'react'
 
 import { EditButton } from './components/Buttons/EditBtn.jsx';
 import { TrashButton } from './components/Buttons/DelBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import {TodoContext , TodoDispatchContext} from './TodosContext';
 
-export default function TodoList({items , onEdit, onDeleteClick,darkClassName, darkStyle , todoStyle , getClass, getStyle}){
+
+export default function TodoList({ darkClassName, darkStyle , todoStyle , getClass, getStyle}){
+
+	const items = useContext(TodoContext);
 
 	return(
+	<div className='ul-Border'>
 		<ul className={'ul-list'} >
+		
 			{items.map((item , index) => (
 				<li
 					className={darkClassName} 
 				 key={item.id}>	
-					<Todos todo={item} editStyle={todoStyle} style={darkStyle}editBtnStyle={getStyle} className={getClass} onChange={onEdit} onDelete={onDeleteClick}/> 
+					<Todos todo={item}editStyle={todoStyle} style={darkStyle}editBtnStyle={getStyle} className={getClass} /> 
 				</li>
 			))}	
 		</ul>
+	</div>
 	)
 }
 
-function Todos({ todo, onChange,onDelete,style, editBtnStyle,className}){
+function Todos({ todo, style, editBtnStyle,className}){
 	const [isEditing , setIsEditing] = useState(false);
+	const dispatch = useContext(TodoDispatchContext);
+
 	let content;
 	if(isEditing){
 		content = (
@@ -31,9 +40,12 @@ function Todos({ todo, onChange,onDelete,style, editBtnStyle,className}){
 				type='text'
 				value={todo.text}
 					onChange={(e) => {
-						onChange({
-						...todo,
-						text: e.target.value	
+						dispatch({
+							type: 'edit',
+						todo:{
+							...todo,
+							text: e.target.value
+						}	
 					})
 				}}
 				/>
@@ -54,7 +66,12 @@ function Todos({ todo, onChange,onDelete,style, editBtnStyle,className}){
 			/>
 				<TrashButton
 					style={{ cursor: 'pointer' }}
-					onClick={() => onDelete(todo.id)}
+					onClick={() => {
+						dispatch({
+							type: 'delete',
+							id: todo.id
+						})
+					}}
 				/>
 			</span>
 		)
@@ -65,10 +82,15 @@ function Todos({ todo, onChange,onDelete,style, editBtnStyle,className}){
 				type="checkbox"
 				checked={todo.completed}
 				onChange={(e) => {
-					onChange({
+					e.stopPropagation();
+					dispatch({
+						type: 'edit',
+						todo:{
 						...todo,
 						completed: e.target.checked,
+						}
 					});
+					
 				}}
 			/>
 		{content}
