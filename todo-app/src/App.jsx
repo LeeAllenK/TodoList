@@ -16,47 +16,42 @@ const TodoApp = () => {
 
   const [todos, dispatch] = useReducer(TodoReducer, initialTodos);
   const [darkMode , setDarkMode] = useState(false)
-  const [style, setStyle] = useState("black");
+  const [style, setStyle] = useState("darkgrey");
 
-//Light/Dark Mode 
-  const changeLightMode = () => {
-    switch(style){
-      case 'black':
-      document.querySelector('body').style.backgroundColor = style;
-      setStyle('white');
-       break;
-      case 'white':
-        document.querySelector('body').style.backgroundColor = style;
-        setStyle('black')
-        break;
-        default: return style;
-      }
-  }   
+//Light/Dark Mode  
   const changeColorMode = () => {
     setDarkMode(dark => !dark);
+    switch(style) {
+      case 'darkgrey':
+        document.querySelector('body').style.backgroundColor = style;
+        setStyle('white');
+        break;
+      case 'white':
+        document.querySelector('body').style.backgroundColor = style;
+        setStyle('darkgrey')
+        break;
+      default: return style;
+    }
   }
-
 return (
   <div className='App'>
     <div>
     <FontAwesomeIcon
      icon={faSun} 
-    style={{color: darkMode ? 'white' : 'black', cursor: 'pointer'}}
+    style={{color: darkMode && 'black', cursor: 'pointer'}}
     onClick={(e) => {
       e.stopPropagation();
       changeColorMode();
-      changeLightMode();
     }}
     />
-    <h1 className='header' style={{color: darkMode ? 'white' : 'black'}}>Todo List</h1>
-  
+    <h1 className='header' style={{color: darkMode && 'black'}}>Todo List</h1>
   <TodoContext.Provider value={todos}>
   <TodoDispatchContext.Provider value={dispatch}>
     <AddButton />
     <TodoList
       items={todos}
       getStyle={{cursor: 'pointer'}}
-      darkStyle={{ color: darkMode ? 'white ' : 'black'}}
+      darkStyle={{ color: darkMode && 'black'}}
       darkClassName={darkMode ? 'todo-list-white' : 'todo-list'}
     />
   </TodoDispatchContext.Provider>
@@ -67,9 +62,5 @@ return (
 }
 export default TodoApp;
 
-const initialTodos = [
-
-  { id: 0, text: 'React Developer', completed: false },
-
-];
+const initialTodos = [];
 

@@ -10,7 +10,6 @@ import {TodoContext , TodoDispatchContext} from './TodosContext';
 export default function TodoList({ darkClassName, darkStyle , todoStyle , getClass, getStyle}){
 
 	const items = useContext(TodoContext);
-
 	return(
 	<div className='ul-Border'>
 		<ul className={'ul-list'} >
@@ -30,7 +29,6 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 function Todos({ todo, style, editBtnStyle,className}){
 	const [isEditing , setIsEditing] = useState(false);
 	const dispatch = useContext(TodoDispatchContext);
-
 	let content;
 	if(isEditing){
 		content = (
