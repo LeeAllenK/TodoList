@@ -14,7 +14,7 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 	<div className='ul-Border'>
 		<ul className={'ul-list'} >
 		
-			{items.map((item , index) => (
+			{items.map((item) => (
 				<li
 					className={darkClassName} 
 				 key={item.id}>	
@@ -25,7 +25,6 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 	</div>
 	)
 }
-
 function Todos({ todo, style, editBtnStyle,className}){
 	const [isEditing , setIsEditing] = useState(false);
 	const dispatch = useContext(TodoDispatchContext);
@@ -47,7 +46,6 @@ function Todos({ todo, style, editBtnStyle,className}){
 					})
 				}}
 				/>
-				{' '}
 			<EditButton style={editBtnStyle} value="Save" onClick={() => setIsEditing(false)}/>
 			</span>
 		)
@@ -62,6 +60,7 @@ function Todos({ todo, style, editBtnStyle,className}){
 			style={{cursor: 'pointer'}}
 			onClick={() => setIsEditing(true)}		
 			/>
+			
 				<TrashButton
 					style={{ cursor: 'pointer' }}
 					onClick={() => {
@@ -76,7 +75,8 @@ function Todos({ todo, style, editBtnStyle,className}){
 	}
 	return(
 		<label className={className} style={style}>
-			<input
+			<div>
+			<input className='checkbox-container'
 				type="checkbox"
 				checked={todo.completed}
 				onChange={(e) => {
@@ -91,8 +91,8 @@ function Todos({ todo, style, editBtnStyle,className}){
 					
 				}}
 			/>
+			</div>
 		{content}
-		{' '}
 		</label>
 	)
 }

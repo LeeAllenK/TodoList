@@ -1,63 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton+SC&display=swap');
 
-.signIn {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -moz-transform: translate(-50%, -50%);
-  /* Firefox */
-  -ms-transform: translate(-50%, -50%);
-  /* IE 9 */
-  -webkit-transform: translate(-50%, -50%);
-  /* Safari and Chrome*/
-  -o-transform: translate(-50%, -50%);
-  /* Opera */
-  transform: translate(-50%, -50%);
-}
-
-.signinBtn {
-  color: white;
-  background-color: black;
-  border: 3px solid white;
-  border-radius: 50px;
-  font-size: 100px;
-  box-shadow: 0px 10px rgb(6, 6, 6);
-  cursor: pointer;
-}
-
-.logoutBtn {
-  float: right;
-  font-size: 25px;
-  border: 3px solid black;
-  font-weight: bolder;
-  border-radius: 20px;
-  background-color: white;
-  cursor: pointer;
-}
-
-.logoutBtn:hover {
-  transform: scale(1.1);
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 20px;
+  box-sizing: border-box;
 }
 body {
   font-family: "Anton SC", sans-serif;
   font-weight: 100;
   font-size: 20px;
   font-style: normal;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  color: #000;
+}
+
+body.dark-mode {
+  background-color: #000000;
+  color: #fff;
+}
+
+.fa-sun{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+}
+.logoutBtn{
+  border-radius: 30px;
+  font-size: inherit;
+  font-family: inherit;
+  position: absolute;
+  right: 100px;
+  
+}
+.logoutBtn:active{
+  transform: translateY(2px);
+  background-color: red;
 }
 .header {
   display: flex;
   justify-content: center;
 }
-.checkbox {
-  cursor: pointer;
-}
+
+
 .inputBorder {
   display: flex;
-  justify-content: center;
   align-items: center;
-
 }
-input[type="text"]{
+.inputText {
   flex-grow: .2;
   border-radius: 30px;
   font-family: "Anton SC", sans-serif;
@@ -65,25 +64,22 @@ input[type="text"]{
   font-size: inherit;
   font-style: normal;
   text-align: center;
-
 }
-input[type="text"]:hover{
-  background: lightgrey
+.inputText:hover {
+  background: lightgrey;
 }
-
 .addTodo {
   border: 1px solid rgb(3, 3, 3);
   border-radius: 10px;
   font-size: 30px;
   font-weight: bolder;
 }
-.fa-circle-arrow-up{
-  font-size: 30px;
-  color: green;
-  margin: 1px;
-}
 
-.editBtn{
+.fa-circle-arrow-up {
+  font-size: 30px;
+  margin: 3px;
+}
+.editBtn {
   border-radius: 10px;
   font-family: inherit;
   font-size: inherit;
@@ -91,29 +87,30 @@ input[type="text"]:hover{
   color: white;
   background-color: black;
 }
-.ul-list{
+.ul-list {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  list-style: none;
 }
-.todo-list,.todo-list-white {
+
+.todo-list,
+.todo-list-white {
   display: flex;
   justify-content: center;
   list-style-type: none;
   width: 400px;
   margin: 2px;
-  /* border: 2px solid black; */
   border-radius: 20px;
   border-bottom: thick line;
   box-sizing: border-box;
 }
-
-.todo-list:hover{
+.todo-list:hover {
   background-color: lightgrey;
   border: 2px solid black;
 }
-.todo-list-white:hover{
+.todo-list-white:hover {
   background-color: white;
   border: 2px solid black;
 }
@@ -130,4 +127,20 @@ input[type="text"]:hover{
 .footer {
   display: flex;
   justify-content: center;
+}
+label{
+  display: flex;
+  align-items: flex-end;
+}
+span{
+  display: flex;
+  align-items: center;
+}
+.checkbox-container{
+  display: flex;
+
+}
+.checkbox {
+  display: flex;
+  cursor: pointer;
 }
