@@ -1,4 +1,3 @@
-
 export default function TodoReducer(todos, action) {
 	switch(action.type) {
 		case 'add': {

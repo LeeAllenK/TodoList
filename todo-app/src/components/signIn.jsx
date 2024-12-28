@@ -22,7 +22,6 @@ function SignIn() {
 	const clearError = () => {
 		setError(null);
 	};
-
 	const handleClickPopup = async () => {
 		clearError();
 		try {
@@ -33,7 +32,6 @@ function SignIn() {
 			setError(err.message);
 		}
 	};
-
 	const handleSignUp = async () => {
 		clearError();
 		if(!firstName) {
@@ -70,7 +68,6 @@ function SignIn() {
 			setError('Email already in use');
 		}
 	};
-
 	const handleSignIn = async () => {
 		clearError();
 		if(!email) {
@@ -93,16 +90,13 @@ function SignIn() {
 			setError('Incorrect password. Please try again.');
 		}
 	};
-
 	const validateEmail = (email) => {
 		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return re.test(email);
 	};
-
 	const validatePassword = (password) => {
 		return password.length >= 6;
 	};
-
 	useEffect(() => {
 		setValue(localStorage.getItem('email'));
 	}, []);
@@ -110,7 +104,6 @@ function SignIn() {
 	useEffect(() => {
 		document.body.classList.toggle('dark-mode', isDarkMode);
 	}, [isDarkMode]);
-
 	return (
 		<div className={value ? 'app-container' : 'signin-container'}>
 			<FontAwesomeIcon

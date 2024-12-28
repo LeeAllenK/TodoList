@@ -1,11 +1,9 @@
-import {useState , useContext} from 'react'
-
+import {useState , useContext} from 'react';
 import { EditButton } from './components/Buttons/EditBtn.jsx';
 import { TrashButton } from './components/Buttons/DelBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import {TodoContext , TodoDispatchContext} from './TodosContext';
-
 
 export default function TodoList({ darkClassName, darkStyle , todoStyle , getClass, getStyle}){
 
