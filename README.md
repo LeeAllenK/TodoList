@@ -6,7 +6,7 @@
 
 <div id="header" >
  <h1 class="heading-element" dir="auto">How It's Made:</h1>
- Tech used: HTML, CSS, JavaScript , React , Vite , Node.js<br/><br/>
+ Tech used: HTML, CSS, JavaScript, React, Vite<br/><br/>
 
 </div>
 
