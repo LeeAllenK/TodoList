@@ -73,7 +73,6 @@ function Todos({ todo, style, editBtnStyle,className}){
 	}
 	return(
 		<label className={className} style={style}>
-			<div>
 			<input className='checkbox-container'
 				type="checkbox"
 				checked={todo.completed}
@@ -89,7 +88,6 @@ function Todos({ todo, style, editBtnStyle,className}){
 					
 				}}
 			/>
-			</div>
 		{content}
 		</label>
 	)
