@@ -1,7 +1,7 @@
 import {useReducer} from 'react';
-import TodoList from './TodoList.jsx'
-import TodoReducer from './TodoReducer.jsx'
-import Home from './components/home'
+import TodoList from './TodoList.jsx';
+import TodoReducer from './TodoReducer.jsx';
+import Home from './components/home';
 import {TodoContext, TodoDispatchContext} from './TodosContext';
 import { AddButton } from './components/Buttons/AddBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -11,7 +11,6 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 	return(
 	<div className='ul-Border'>
 		<ul className={'ul-list'} >
-		
 			{items.map((item) => (
 				<li
 					className={darkClassName} 
@@ -86,7 +85,6 @@ function Todos({ todo, style, editBtnStyle,className}){
 						completed: e.target.checked,
 						}
 					});
-					
 				}}
 			/>
 			</div>

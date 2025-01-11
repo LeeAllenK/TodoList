@@ -1,8 +1,8 @@
-import {React , useState , useContext} from 'react'
+import {React , useState , useContext} from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
-import {TodoDispatchContext} from '../../TodosContext'
+import {TodoDispatchContext} from '../../TodosContext';
 
 let nextId = 1;
 export const AddButton = () => {
