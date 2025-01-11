@@ -32,6 +32,7 @@ body.dark-mode {
   left: 20px;
 }
 .logoutBtn{
+  position: absolute;
   border-radius: 30px;
   font-size: inherit;
   font-family: inherit;
