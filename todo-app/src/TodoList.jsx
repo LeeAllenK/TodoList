@@ -12,10 +12,10 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 	<div className='ul-Border'>
 		<ul className={'ul-list'} >
 		
-			{items.map((item) => (
+			{items.map((item,index) => (
 				<li
 					className={darkClassName} 
-				 key={item.id}>	
+				 key={index}>	
 					<Todos todo={item}editStyle={todoStyle} style={darkStyle}editBtnStyle={getStyle} className={getClass} /> 
 				</li>
 			))}	
@@ -23,9 +23,25 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 	</div>
 	)
 }
+	const deleteTodo = async (id,dispatch) => {
+		console.log('Deleting todo with ID:', id); // Log the ID
+		try {
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id}`, {
+				method: 'DELETE',
+			});
+			if(!res.ok) {
+				throw new Error(`Error: ${res.status} ${res.statusText}`);
+			}
+			dispatch({ type: 'delete', id });
+		} catch(err) {
+			console.error('Todo not deleted', err);
+		}
+	};
 function Todos({ todo, style, editBtnStyle,className}){
 	const [isEditing , setIsEditing] = useState(false);
 	const dispatch = useContext(TodoDispatchContext);
+
+
 	let content;
 	if(isEditing){
 		content = (
@@ -62,10 +78,7 @@ function Todos({ todo, style, editBtnStyle,className}){
 				<TrashButton
 					style={{ cursor: 'pointer' }}
 					onClick={() => {
-						dispatch({
-							type: 'delete',
-							id: todo.id
-						})
+						deleteTodo(todo.id ,dispatch)
 					}}
 				/>
 			</span>

@@ -5,6 +5,31 @@ import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
 import {TodoDispatchContext} from '../../TodosContext'
 
 let nextId = 1;
+
+const addTodo = async (text, dispatch) => {
+	const newTodo = { text, completed: false };
+	try {
+		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos`,{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(newTodo),
+		});
+		if(!res.ok) {
+			throw new Error(`Error: ${res.status} ${res.statusText}`);
+		}
+		const data = await res.json();
+		dispatch({
+			type: 'add',
+			id: data._id,
+			text: data.text,
+		});
+	} catch(err) {
+		console.error('Error adding todo', err);
+	}
+};
+
 export const AddButton = () => {
 	const [text , setText] = useState('');
 	const dispatch = useContext(TodoDispatchContext);
@@ -21,13 +46,9 @@ export const AddButton = () => {
 		icon={faCircleArrowUp} 
 		style={{ cursor: 'pointer' }}  
 		onClick={(e) => {
-			e.stopPropagation();
+			e.preventDefault();
 			setText('');
-			dispatch({
-				type: 'add',
-				id: nextId++,
-				text: text
-			})
+			addTodo(text, dispatch);
 		}}
 		></FontAwesomeIcon>
 		}

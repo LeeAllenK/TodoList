@@ -25,6 +25,31 @@ app.get('/todos', async(req, res) => {
 		res.status(500).res.json({message: err.message});
 	}
 })
+
+app.post('/todos', async(req,res)=>{
+		const todo = new Todo({
+			text: req.body.text,
+			completed: req.body.completed	
+		})	
+	try{
+		const newTodo = await todo.save();
+		res.status(201).json(newTodo)
+		
+	}catch(err){
+		res.status(500).res.json({message: err.message});
+	}
+})
+
+app.delete('/todos/:id', async(req, res) => {
+	try{
+		const todo = await findByIdAndDelete(req.params.id)
+		if(!todo) { return res.status(404).json({ message: 'Todo not found' }); }
+		res.json('Todo Deleted')
+	}catch(err){
+		console.error('Error',err)
+		res.status(500).json({message: err.message});
+	}
+})
 app.listen(PORT, () => {
-	console.log(`Port ${PORT} is running!!`)
+	console.log(`Port ${PORT} is now running!!`)
 })
