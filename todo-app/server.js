@@ -20,9 +20,9 @@ const Todo = mongoose.model('Todo', todoSchema);
 app.get('/todos', async(req, res) => {
 	try{
 		const todos = await Todo.find();
-		res.status(200).json(todos)
+		res.json(todos)
 	}catch(err){
-		res.status(500).res.json({message: err.message});
+		res.status(500).json({message: err.message});
 	}
 })
 
@@ -42,7 +42,7 @@ app.post('/todos', async(req,res)=>{
 
 app.delete('/todos/:id', async(req, res) => {
 	try{
-		const todo = await findByIdAndDelete(req.params.id)
+		const todo = await Todo.findByIdAndDelete(req.params.id)
 		if(!todo) { return res.status(404).json({ message: 'Todo not found' }); }
 		res.json('Todo Deleted')
 	}catch(err){

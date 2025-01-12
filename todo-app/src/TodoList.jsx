@@ -23,7 +23,15 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 	</div>
 	)
 }
-	const deleteTodo = async (id,dispatch) => {
+
+
+
+
+function Todos({ todo, style, editBtnStyle,className}){
+	const [isEditing , setIsEditing] = useState(false);
+	const dispatch = useContext(TodoDispatchContext);
+
+	const deleteTodo = async (id) => {
 		console.log('Deleting todo with ID:', id); // Log the ID
 		try {
 			const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id}`, {
@@ -37,11 +45,6 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 			console.error('Todo not deleted', err);
 		}
 	};
-function Todos({ todo, style, editBtnStyle,className}){
-	const [isEditing , setIsEditing] = useState(false);
-	const dispatch = useContext(TodoDispatchContext);
-
-
 	let content;
 	if(isEditing){
 		content = (
@@ -78,7 +81,7 @@ function Todos({ todo, style, editBtnStyle,className}){
 				<TrashButton
 					style={{ cursor: 'pointer' }}
 					onClick={() => {
-						deleteTodo(todo.id ,dispatch)
+						deleteTodo(todo._id ,dispatch)
 					}}
 				/>
 			</span>
