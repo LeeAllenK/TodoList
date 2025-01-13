@@ -27,10 +27,7 @@ app.get('/todos', async(req, res) => {
 })
 
 app.post('/todos', async(req,res)=>{
-		const todo = new Todo({
-			text: req.body.text,
-			completed: req.body.completed	
-		})	
+		const todo = new Todo(req.body);	
 	try{
 		const newTodo = await todo.save();
 		res.status(201).json(newTodo)
@@ -40,13 +37,18 @@ app.post('/todos', async(req,res)=>{
 	}
 })
 
+app.put('/todos/:id', async (req, res) => {
+
+})
+
 app.delete('/todos/:id', async(req, res) => {
 	try{
-		const todo = await Todo.findByIdAndDelete(req.params.id)
-		if(!todo) { return res.status(404).json({ message: 'Todo not found' }); }
-		res.json('Todo Deleted')
+		const {id} = req.params;
+		const todo = await Todo.findByIdAndDelete(id);
+		if(!todo) return res.status(404).json({ message: 'Todo not found' });
+		res.json({ message: 'Todo deleted successfully', todo });
 	}catch(err){
-		console.error('Error',err)
+		console.error(err);
 		res.status(500).json({message: err.message});
 	}
 })

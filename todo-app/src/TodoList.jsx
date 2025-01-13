@@ -8,6 +8,7 @@ import {TodoContext , TodoDispatchContext} from './TodosContext';
 export default function TodoList({ darkClassName, darkStyle , todoStyle , getClass, getStyle}){
 
 	const items = useContext(TodoContext);
+	console.log('ARRAy',items)
 	return(
 	<div className='ul-Border'>
 		<ul className={'ul-list'} >
@@ -16,35 +17,32 @@ export default function TodoList({ darkClassName, darkStyle , todoStyle , getCla
 				<li
 					className={darkClassName} 
 				 key={index}>	
-					<Todos todo={item}editStyle={todoStyle} style={darkStyle}editBtnStyle={getStyle} className={getClass} /> 
+					<Todos todo={item} editStyle={todoStyle} style={darkStyle}editBtnStyle={getStyle} className={getClass} /> 
 				</li>
 			))}	
 		</ul>
 	</div>
 	)
 }
-
-
-
-
+const deleteTodo = async (id,dispatch) => {
+		console.log('ID DELETED',id);
+		try{
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id}`, { method: 'DELETE'});
+			const data = await res.json();
+			console.log('del',data)
+			if(!data)console.log('No Data')
+			dispatch({
+				type: 'delete',
+				id
+			});
+		}catch(err){
+			console.error({message: 'Problem with deleting item'});
+		}
+	};
 function Todos({ todo, style, editBtnStyle,className}){
 	const [isEditing , setIsEditing] = useState(false);
 	const dispatch = useContext(TodoDispatchContext);
-
-	const deleteTodo = async (id) => {
-		console.log('Deleting todo with ID:', id); // Log the ID
-		try {
-			const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id}`, {
-				method: 'DELETE',
-			});
-			if(!res.ok) {
-				throw new Error(`Error: ${res.status} ${res.statusText}`);
-			}
-			dispatch({ type: 'delete', id });
-		} catch(err) {
-			console.error('Todo not deleted', err);
-		}
-	};
+		console.log('Todo Object:',todo)
 	let content;
 	if(isEditing){
 		content = (
@@ -53,14 +51,8 @@ function Todos({ todo, style, editBtnStyle,className}){
 				className='inputText'
 				type='text'
 				value={todo.text}
-					onChange={(e) => {
-						dispatch({
-							type: 'edit',
-						todo:{
-							...todo,
-							text: e.target.value
-						}	
-					})
+					onChange={() => {
+						
 				}}
 				/>
 			<EditButton style={editBtnStyle} value="Save" onClick={() => setIsEditing(false)}/>
@@ -77,10 +69,10 @@ function Todos({ todo, style, editBtnStyle,className}){
 			style={{cursor: 'pointer'}}
 			onClick={() => setIsEditing(true)}		
 			/>
-			
 				<TrashButton
 					style={{ cursor: 'pointer' }}
-					onClick={() => {
+					delClick={() => {
+						console.log('Deleting todo with id:', todo._id);
 						deleteTodo(todo._id ,dispatch)
 					}}
 				/>
@@ -92,15 +84,7 @@ function Todos({ todo, style, editBtnStyle,className}){
 			<input className='checkbox-container'
 				type="checkbox"
 				checked={todo.completed}
-				onChange={(e) => {
-					e.stopPropagation();
-					dispatch({
-						type: 'edit',
-						todo:{
-						...todo,
-						completed: e.target.checked,
-						}
-					});
+				onChange={() => {
 					
 				}}
 			/>

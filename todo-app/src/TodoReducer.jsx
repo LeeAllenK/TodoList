@@ -1,29 +1,28 @@
 export default function TodoReducer(todos, action) {
 	switch(action.type) {
-		 case 'set': 
+		case 'set':
 			return action.todos;
-		case 'add': 
-		return [
-			...todos, 
-			{ 
-				id: action.id, 
-				text: action.text, 
-				completed: false 
-			}
-		];
+		case 'add':
+			return [
+				...todos,
+				{
+					id: action.id,
+					text: action.text,
+					completed: false
+				}
+			];
 		case 'edit': {
 			console.log(action.id)
-			return todos.map((t) => {
-				if(t.id === action.todo.id) {
-					return action.todo
-				} else return t;
-			})
+			
 		}
 		case 'delete': {
-			return todos.filter((t) => t.id !== action.id)
+			console.log(todos.filter(todo => todo._id));
+			console.log(action.id)
+			if(!action.id)console.log('NO ID DETECTED')
+		 	return todos.filter(todo => todo._id !== action.id);
 		}
 		default: {
-			throw Error('Unknown action: ' + action.type);
+			throw new Error('Unknown action: ' + action.type);
 		}
 	}
 }

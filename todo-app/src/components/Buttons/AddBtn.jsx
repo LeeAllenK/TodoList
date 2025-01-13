@@ -1,10 +1,7 @@
 import {React , useState , useContext} from 'react'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
 import {TodoDispatchContext} from '../../TodosContext'
-
-let nextId = 1;
 
 const addTodo = async (text, dispatch) => {
 	const newTodo = { text, completed: false };
@@ -20,6 +17,7 @@ const addTodo = async (text, dispatch) => {
 			throw new Error(`Error: ${res.status} ${res.statusText}`);
 		}
 		const data = await res.json();
+		console.log('POST ID:',data)
 		dispatch({
 			type: 'add',
 			id: data._id,
@@ -45,10 +43,9 @@ export const AddButton = () => {
 		<FontAwesomeIcon 
 		icon={faCircleArrowUp} 
 		style={{ cursor: 'pointer' }}  
-		onClick={(e) => {
-			e.preventDefault();
-			setText('');
+		onClick={() => {
 			addTodo(text, dispatch);
+			setText('');
 		}}
 		></FontAwesomeIcon>
 		}
