@@ -1,8 +1,7 @@
-import {useReducer, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import TodoList from './TodoList.jsx'
-import TodoReducer from './TodoReducer.jsx'
 import Home from './components/home'
-import {TodoContext, TodoDispatchContext} from './TodosContext';
+import {TodoContext,SetTodoContext} from './TodosContext';
 import { AddButton } from './components/Buttons/AddBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -11,23 +10,24 @@ import './App.css'
 
 
 const TodoApp = () => {
-  const [todos, dispatch] = useReducer(TodoReducer, initialTodos);
+  const [todos, setTodos] = useState(initialTodos);
 
 useEffect(() =>{
   const fetchTodos = async () => {
-    try{
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/todos`)
-    const data = await res.json();
-    dispatch({
-      type: 'set',
-      todos: data  
-    })
-    }catch(err){
-      console.error('Error fetching', err)
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/todos`);
+      if(!res.ok) {
+        throw new Error(`Error: ${res.status} ${res.statusText}`);
+      }
+      const data = await res.json();
+      setTodos(data)
+    } catch(err) {
+      console.error('Error fetching todos', err);
     }
-  }
+  };
   fetchTodos();
 },[])
+
 
 return (
   <div className='App'>
@@ -40,15 +40,14 @@ return (
     </Home>
     <div>
   <TodoContext.Provider value={todos}>
-  <TodoDispatchContext.Provider value={dispatch}>
+  <SetTodoContext.Provider value={setTodos}>
     <h1 className='header'>Todo List</h1>
     <AddButton />
     <TodoList
-      items={todos}
       getStyle={{cursor: 'pointer'}}
       darkClassName='todo-list'
     />
-  </TodoDispatchContext.Provider>
+  </SetTodoContext.Provider>
   </TodoContext.Provider>
   </div>
     </div>
