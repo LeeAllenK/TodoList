@@ -1,7 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect,useReducer} from 'react';
 import TodoList from './TodoList.jsx'
 import Home from './components/home'
-import {TodoContext,SetTodoContext} from './TodosContext';
+import {TodoReducer} from './TodoReducer';
+import {TodoContext,TodoDispatchContext} from './TodosContext';
 import { AddButton } from './components/Buttons/AddBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +11,7 @@ import './App.css'
 
 
 const TodoApp = () => {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, dispatch] = useReducer(TodoReducer,initialTodos);
 
 useEffect(() =>{
   const fetchTodos = async () => {
@@ -20,7 +21,7 @@ useEffect(() =>{
         throw new Error(`Error: ${res.status} ${res.statusText}`);
       }
       const data = await res.json();
-      setTodos(data)
+      dispatch({type: 'set', todos: data})
     } catch(err) {
       console.error('Error fetching todos', err);
     }
@@ -40,14 +41,14 @@ return (
     </Home>
     <div>
   <TodoContext.Provider value={todos}>
-  <SetTodoContext.Provider value={setTodos}>
+  <TodoDispatchContext.Provider value={dispatch}>
     <h1 className='header'>Todo List</h1>
     <AddButton />
     <TodoList
       getStyle={{cursor: 'pointer'}}
       darkClassName='todo-list'
     />
-  </SetTodoContext.Provider>
+  </TodoDispatchContext.Provider>
   </TodoContext.Provider>
   </div>
     </div>

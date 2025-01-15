@@ -39,7 +39,17 @@ app.post('/todos', async (req, res) => {
 
 
 app.put('/todos/:id', async (req, res) => {
-
+	try{
+		const {text, completed} = req.body;
+		const todo = await Todo.findByIdAndUpdate(req.params.id);
+		todo.text = text;
+		todo.completed = completed;
+		const updateTodo = await todo.save();
+		res.json(updateTodo);
+	}catch(err){
+		console.error(err)
+		res.status(500).json({message:'Error updating',err})
+	}
 })
 app.delete('/todos/:id', async (req, res) => {
 	try {
