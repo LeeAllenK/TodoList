@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { TodoContext,TodoDispatchContext } from '../../TodosContext';
 
-const addTodo = async (text,dispatch) => {
-	const newTodo = { text, completed: false };
+const addTodo = async (text, email, dispatch) => {
+	console.log('ADDTODO',email)
+	const newTodo = { text, completed: false, email };
 	try {
 		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos`, {
 			method: 'POST',
@@ -18,24 +19,21 @@ const addTodo = async (text,dispatch) => {
 		}
 		const data = await res.json();
 		console.log('POST ID:', data._id);
-			dispatch({
-				type: 'add',
-				id: data._id,	
-				text: data.text,
-				completed: false
-			})
-		// setTodos([
-		// 	...todos,
-		// 	{ id: data._id, text: data.text, completed: false },
-		// ]);
+		console.log('Email:', data); // Log the email to verify
+		dispatch({
+			type: 'add',
+			id: data._id,
+			text: data.text,
+			completed: false,
+			email// Ensure the email is included in the dispatch
+		});
 	} catch(err) {
 		console.error('Error adding todo', err);
 	}
 };
 
-export const AddButton = () => {
+export const AddButton = ({email}) => {
 	const [text, setText] = useState('');
-	const todos = useContext(TodoContext)
 	const dispatch = useContext(TodoDispatchContext)
 	return (
 		<div className='inputBorder'>
@@ -50,7 +48,7 @@ export const AddButton = () => {
 					icon={faCircleArrowUp}
 					style={{ cursor: 'pointer' }}
 					onClick={() => {
-						addTodo(text,dispatch);
+						addTodo(text,email,dispatch);
 						setText('');
 					}}
 				/>

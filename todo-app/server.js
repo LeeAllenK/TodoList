@@ -13,9 +13,8 @@ mongoose.connect(`${process.env.MONGODB_URI}`);
 const todoSchema = new mongoose.Schema({
 	text: { type: String, required: true },
 	completed: { type: Boolean, default: false },
-	otherId: { type: String },
+	email: {type: String, required: true}
 });
-
 const Todo = mongoose.model('Todo', todoSchema);
 
 app.get('/todos', async(req, res) => {
@@ -36,8 +35,6 @@ app.post('/todos', async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 });
-
-
 app.put('/todos/:id', async (req, res) => {
 	try{
 		const {text, completed} = req.body;
@@ -47,10 +44,10 @@ app.put('/todos/:id', async (req, res) => {
 		const updateTodo = await todo.save();
 		res.json(updateTodo);
 	}catch(err){
-		console.error(err)
-		res.status(500).json({message:'Error updating',err})
+		console.error(err);
+		res.status(500).json({message:'Error updating',err});
 	}
-})
+});
 app.delete('/todos/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -62,7 +59,6 @@ app.delete('/todos/:id', async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 });
-
 app.listen(PORT, () => {
-	console.log(`Port ${PORT} is now running!!`)
-})
+	console.log(`Port ${PORT} is now running!!`);
+});

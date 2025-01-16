@@ -1,13 +1,5 @@
 import { auth, provider } from './firebase';
-import { signInWithRedirect, signInWithPopup } from "firebase/auth";
-
-export const signInWithGoogleRedirect = async () => {
-	try {
-		await signInWithRedirect(auth, provider);
-	} catch(err) {
-		throw new Error(err.message);
-	}
-};
+import { signInWithPopup } from "firebase/auth";
 
 export const signInWithGooglePopup = async () => {
 	try {

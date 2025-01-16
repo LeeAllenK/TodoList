@@ -4,7 +4,8 @@ import { signUpWithEmail } from './signUpWithEmail';
 import { signInWithEmail } from './signInWithEmail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
-
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
 import App from '../App.jsx';
 import '../App.css';
 import '../signin-signup.css'; 
@@ -18,7 +19,9 @@ function SignIn() {
 	const [password, setPassword] = useState('');
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [isDarkMode, setIsDarkMode] = useState(false);
+	const [user, setUser] = useState(null);
 
+	useEffect(() => { const unsubscribe = onAuthStateChanged(auth, (user) => { if(user) { setUser(user); setEmail(localStorage.getItem('email')); } else { setUser(null); setEmail(''); } }); return () => unsubscribe(); }, []);
 	const clearError = () => {
 		setError(null);
 	};
@@ -104,6 +107,7 @@ function SignIn() {
 	useEffect(() => {
 		document.body.classList.toggle('dark-mode', isDarkMode);
 	}, [isDarkMode]);
+		console.log(email)
 	return (
 		<div className={value ? 'app-container' : 'signin-container'}>
 			<FontAwesomeIcon
@@ -114,8 +118,9 @@ function SignIn() {
 					setIsDarkMode(d => !d)
 				}}
 			/>
-			{value ? (
+			{user ? (
 					<App
+					email={email}
 					 />
 			) : (
 				<>
