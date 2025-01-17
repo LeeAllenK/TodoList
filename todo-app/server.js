@@ -13,7 +13,7 @@ mongoose.connect(`${process.env.MONGODB_URI}`);
 const todoSchema = new mongoose.Schema({
 	text: { type: String, required: true },
 	completed: { type: Boolean, default: false },
-	email: {type: String, required: true}
+	email: { type: String, required: true },
 });
 const Todo = mongoose.model('Todo', todoSchema);
 
@@ -40,7 +40,7 @@ app.put('/todos/:id', async (req, res) => {
 		const {text, completed} = req.body;
 		const todo = await Todo.findByIdAndUpdate(req.params.id);
 		todo.text = text;
-		todo.completed = completed;
+		todo.completed = completed;	
 		const updateTodo = await todo.save();
 		res.json(updateTodo);
 	}catch(err){

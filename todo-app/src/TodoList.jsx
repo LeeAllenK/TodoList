@@ -3,16 +3,17 @@ import { EditButton } from './components/Buttons/EditBtn.jsx';
 import { TrashButton } from './components/Buttons/DelBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { TodoContext, TodoDispatchContext } from './TodosContext';
+import { TodoContext, TodoDispatchContext, EmailContext } from './TodosContext';
 
-export default function TodoList({ darkClassName, darkStyle, todoStyle, getClass, getStyle, email }) {
+export default function TodoList({ darkClassName, darkStyle, todoStyle, getClass, getStyle}) {
 	const items = useContext(TodoContext);
+	const email = useContext(EmailContext);
 	return (
 		<div className='ul-Border'>
 			<ul className={'ul-list'}>
 				{items.filter(item => item.email === email).map((item, index) => (
 					<li className={darkClassName} key={index}>
-						<Todos todo={item} editStyle={todoStyle} style={darkStyle} editBtnStyle={getStyle} className={getClass} email={email} />
+						<Todos todo={item} editStyle={todoStyle} style={darkStyle} editBtnStyle={getStyle} className={getClass} />
 					</li>
 				))}
 			</ul>
@@ -20,7 +21,10 @@ export default function TodoList({ darkClassName, darkStyle, todoStyle, getClass
 	);
 }
 const updateTodo = async (id,clientId,email, newText, dispatch) => {
-	const updateTodo = { text: newText, completed: false, email };
+	if(!newText.trim()){
+		newText = ' ';
+	}
+	const updateTodo = { text: newText, completed: false,email };
 	try {
 		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id ? id : clientId}`, {
 			method: 'PUT',
@@ -30,10 +34,9 @@ const updateTodo = async (id,clientId,email, newText, dispatch) => {
 			body: JSON.stringify(updateTodo)
 		});
 		const data = await res.json();
-		console.log('DATA', data);
 		dispatch({
 			type: 'edit',
-			id,
+			id: id ? id : clientId,
 			text: newText,
 			completed: false,
 			email
@@ -42,7 +45,7 @@ const updateTodo = async (id,clientId,email, newText, dispatch) => {
 		console.error(err);
 	}
 };
-const deleteTodo = async (id,clientId,email, dispatch) => {
+const deleteTodo = async (id,clientId, dispatch) => {
 	try {
 		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id ? id : clientId}`, {
 			method: 'DELETE'
@@ -59,10 +62,11 @@ const deleteTodo = async (id,clientId,email, dispatch) => {
 		console.error('Problem with deleting item', err);
 	}
 };
-function Todos({ todo, style, editBtnStyle, className, email }) {
+function Todos({ todo, style, editBtnStyle, className}) {
 	const [isEditing, setIsEditing] = useState(false);
 	const [newText, setNewText] = useState(todo.text);
 	const dispatch = useContext(TodoDispatchContext);
+	const email = useContext(EmailContext);
 	let content;
 	if(isEditing) {
 		content = (
@@ -89,7 +93,6 @@ function Todos({ todo, style, editBtnStyle, className, email }) {
 				{todo.text}{' '}
 				<FontAwesomeIcon
 					icon={faPenToSquare}
-					value='Edit'
 					style={{ cursor: 'pointer' }}
 					onClick={() => setIsEditing(true)}
 				/>
@@ -97,7 +100,7 @@ function Todos({ todo, style, editBtnStyle, className, email }) {
 					style={{ cursor: 'pointer' }}
 					delClick={(e) => {
 						e.stopPropagation();
-						deleteTodo(todo._id,todo.id, email, dispatch);
+						deleteTodo(todo._id,todo.id,dispatch);
 					}}
 				/>
 			</span>

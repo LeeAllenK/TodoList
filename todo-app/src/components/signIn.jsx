@@ -21,7 +21,21 @@ function SignIn() {
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const [user, setUser] = useState(null);
 
-	useEffect(() => { const unsubscribe = onAuthStateChanged(auth, (user) => { if(user) { setUser(user); setEmail(localStorage.getItem('email')); } else { setUser(null); setEmail(''); } }); return () => unsubscribe(); }, []);
+	const validateEmail = (email) => {
+		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return re.test(email);
+	};
+	useEffect(() => { 
+		const unsubscribe = onAuthStateChanged(auth, (user) => { 
+			if(user) { 
+				setUser(user); 
+				setEmail(localStorage.getItem('email')); 
+			}else{ 
+					setUser(null); setEmail(''); 
+				} 
+			}); 
+				return () => unsubscribe(); 
+			}, []);
 	const clearError = () => {
 		setError(null);
 	};
@@ -92,10 +106,6 @@ function SignIn() {
 		} catch(err) {
 			setError('Incorrect password. Please try again.');
 		}
-	};
-	const validateEmail = (email) => {
-		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return re.test(email);
 	};
 	const validatePassword = (password) => {
 		return password.length >= 6;

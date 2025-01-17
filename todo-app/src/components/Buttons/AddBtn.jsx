@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { TodoContext,TodoDispatchContext } from '../../TodosContext';
+import {TodoDispatchContext, EmailContext} from '../../TodosContext';
 
 const addTodo = async (text, email, dispatch) => {
 	console.log('ADDTODO',email)
@@ -32,9 +32,10 @@ const addTodo = async (text, email, dispatch) => {
 	}
 };
 
-export const AddButton = ({email}) => {
+export const AddButton = () => {
 	const [text, setText] = useState('');
-	const dispatch = useContext(TodoDispatchContext)
+	const dispatch = useContext(TodoDispatchContext);
+	const email = useContext(EmailContext);
 	return (
 		<div className='inputBorder'>
 			<input
