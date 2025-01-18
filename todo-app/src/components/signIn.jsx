@@ -22,8 +22,8 @@ function SignIn() {
 	const [user, setUser] = useState(null);
 
 	const validateEmail = (email) => {
-		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return re.test(email);
+		const regExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return regExp.test(email);
 	};
 	useEffect(() => { 
 		const unsubscribe = onAuthStateChanged(auth, (user) => { 
@@ -117,7 +117,6 @@ function SignIn() {
 	useEffect(() => {
 		document.body.classList.toggle('dark-mode', isDarkMode);
 	}, [isDarkMode]);
-		console.log(email)
 	return (
 		<div className={value ? 'app-container' : 'signin-container'}>
 			<FontAwesomeIcon

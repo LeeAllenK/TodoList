@@ -11,7 +11,6 @@ import './App.css';
 const TodoApp = () => {
   const [todos, dispatch] = useReducer(TodoReducer, initialTodos);
   const [email, setEmail] = useState('');
-
   useEffect(() => {
     const fetchTodos = async () => {
       try {

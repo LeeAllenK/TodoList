@@ -24,7 +24,7 @@ app.get('/todos', async(req, res) => {
 	}catch(err){
 		res.status(500).json({message: err.message});
 	}
-})
+});
 app.post('/todos', async (req, res) => {
 	try {
 		const newTodo = new Todo(req.body);

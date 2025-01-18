@@ -18,20 +18,17 @@ const addTodo = async (text, email, dispatch) => {
 			throw new Error(`Error: ${res.status} ${res.statusText}`);
 		}
 		const data = await res.json();
-		console.log('POST ID:', data._id);
-		console.log('Email:', data); // Log the email to verify
 		dispatch({
 			type: 'add',
 			id: data._id,
 			text: data.text,
 			completed: false,
-			email// Ensure the email is included in the dispatch
+			email
 		});
 	} catch(err) {
 		console.error('Error adding todo', err);
 	}
 };
-
 export const AddButton = () => {
 	const [text, setText] = useState('');
 	const dispatch = useContext(TodoDispatchContext);

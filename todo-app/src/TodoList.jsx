@@ -20,13 +20,13 @@ export default function TodoList({ darkClassName, darkStyle, todoStyle, getClass
 		</div>
 	);
 }
-const updateTodo = async (id,clientId,email, newText, dispatch) => {
+const updateTodo = async (id,clientId,email, newText,completed, dispatch) => {
 	if(!newText.trim()){
-		newText = ' ';
-	}
-	const updateTodo = { text: newText, completed: false,email };
+			newText= ' ';
+		}
+	const updateTodo = { text: newText, completed:completed, email };
 	try {
-		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id ? id : clientId}`, {
+		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id || clientId}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
@@ -34,11 +34,12 @@ const updateTodo = async (id,clientId,email, newText, dispatch) => {
 			body: JSON.stringify(updateTodo)
 		});
 		const data = await res.json();
+		console.log(data)
 		dispatch({
 			type: 'edit',
-			id: id ? id : clientId,
+			id: id || clientId,
 			text: newText,
-			completed: false,
+			completed: completed,
 			email
 		});
 	} catch(err) {
@@ -47,7 +48,7 @@ const updateTodo = async (id,clientId,email, newText, dispatch) => {
 };
 const deleteTodo = async (id,clientId, dispatch) => {
 	try {
-		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id ? id : clientId}`, {
+		const res = await fetch(`${import.meta.env.VITE_API_URL}/todos/${id || clientId}`, {
 			method: 'DELETE'
 		});
 		if(!res.ok) {
@@ -59,7 +60,7 @@ const deleteTodo = async (id,clientId, dispatch) => {
 			id
 		});
 	} catch(err) {
-		console.error('Problem with deleting item', err);
+		console.error('Error deleting Todo', err);
 	}
 };
 function Todos({ todo, style, editBtnStyle, className}) {
@@ -80,8 +81,8 @@ function Todos({ todo, style, editBtnStyle, className}) {
 				<EditButton
 					style={editBtnStyle}
 					value="Save"
-					onClick={() => {
-						updateTodo(todo._id,todo.id,email, newText, dispatch);
+					onClick={(e) => {
+						updateTodo(todo._id,todo.id, email, newText,todo.completed, dispatch);
 						setIsEditing(false);
 					}}
 				/>
@@ -99,7 +100,7 @@ function Todos({ todo, style, editBtnStyle, className}) {
 				<TrashButton
 					style={{ cursor: 'pointer' }}
 					delClick={(e) => {
-						e.stopPropagation();
+						e.preventDefault();
 						deleteTodo(todo._id,todo.id,dispatch);
 					}}
 				/>
@@ -113,7 +114,7 @@ function Todos({ todo, style, editBtnStyle, className}) {
 				type="checkbox"
 				checked={todo.completed}
 				onChange={(e) => {
-					e.stopPropagation();
+					updateTodo(todo._id,todo.id,email,newText,e.target.checked,dispatch);
 				}}
 			/>
 			{content}
