@@ -114,18 +114,7 @@ function Todos({ todo, style, editBtnStyle, className}) {
 				type="checkbox"
 				checked={todo.completed}
 				onChange={(e) => {
-<<<<<<< HEAD
-					e.stopPropagation();
-					dispatch({
-						type: 'edit',
-						todo:{
-						...todo,
-						completed: e.target.checked,
-						}
-					});
-=======
 					updateTodo(todo._id,todo.id,email,newText,e.target.checked,dispatch);
->>>>>>> secondary
 				}}
 			/>
 			{content}
