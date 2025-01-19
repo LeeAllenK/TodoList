@@ -50,6 +50,7 @@ body.dark-mode {
 }
 .inputBorder {
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 .inputText {
@@ -60,9 +61,17 @@ body.dark-mode {
   font-size: inherit;
   font-style: normal;
   text-align: center;
+  width: 200px;
 }
+
 .inputText:hover {
   background: lightgrey;
+}
+@media (max-width: 600px) {
+  .inputText {
+    width: 50%;
+    font-size: 14px;
+  }
 }
 .addTodo {
   border: 1px solid rgb(3, 3, 3);
@@ -70,9 +79,16 @@ body.dark-mode {
   font-size: 30px;
   font-weight: bolder;
 }
-
+@media (max-width: 600px) {
+  .addTodo {
+    width: 50%;
+    font-size: 14px;
+    /* Adjust font size for smaller screens */
+  }
+}
 .fa-circle-arrow-up {
   font-size: 30px;
+  color: green;
   margin: 3px;
 }
 .editBtn {
