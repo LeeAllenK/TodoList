@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import {useReducer} from 'react';
-import TodoList from './TodoList.jsx';
-import TodoReducer from './TodoReducer.jsx';
-import Home from './components/home';
-import {TodoContext, TodoDispatchContext} from './TodosContext';
-=======
 import { useState, useEffect, useReducer } from 'react';
 import TodoList from './TodoList.jsx';
 import Home from './components/home';
 import { TodoReducer } from './TodoReducer';
 import { TodoContext, TodoDispatchContext, EmailContext } from './TodosContext';
->>>>>>> secondary
 import { AddButton } from './components/Buttons/AddBtn.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
