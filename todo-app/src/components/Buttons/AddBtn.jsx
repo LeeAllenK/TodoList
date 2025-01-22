@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-import {React , useState , useContext} from 'react';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
-import {TodoDispatchContext} from '../../TodosContext';
-=======
 import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons';
 import {TodoDispatchContext, EmailContext} from '../../TodosContext';
->>>>>>> secondary
 
 const addTodo = async (text, email, dispatch) => {
 	console.log('ADDTODO',email)
