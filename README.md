@@ -1,6 +1,6 @@
 <div id="header" >
  <h1  class="heading-element" dir="auto">Todo List</h1>
- <img src="https://i.imgur.com/VLBniiy.gif" alt="gif not available">
+ <img src="https://i.imgur.com/2XGSJDJ.gif" alt="gif not available">
   A todo list with the ability to add , edit and delete the users input.
 </div>
 
